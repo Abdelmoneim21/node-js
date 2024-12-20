@@ -18,23 +18,3 @@ const fileErr = fs.readFile("./hello.txt", "utf-8", (err, data) => {
 console.log("second");
 
 console.log(Buffer.from("h").toJSON());
-
-// fs.writeFile(
-//   "./users,json",
-//   JSON.stringify([
-//     { id: "1", name: "ahmed" },
-//     { id: 2, name: "sayed" },
-//   ]),
-//   "utf-8",
-//   (err, data) => {
-//     if (err) {
-//       console.log("error is => ", err);
-//     } else {
-//       console.log("content is => ", data);
-//     }
-//   }
-// );
-
-// fs.unlink("./users,json", (err) => {
-//   console.log("Error deleting file");
-// });
