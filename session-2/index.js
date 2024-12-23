@@ -1,20 +1,54 @@
+/** file system */
+
 const fs = require("node:fs");
-
 //read file
-// const fileContent = fs.readFileSync("./users.json", "utf-8");
-// console.log("file content", fileContent);
-// read text file
-
-// const fileText = fs.readFileSync("./hello.txt", "utf-8");
-// console.log("file Text", fileText);
 console.log("first");
-const fileErr = fs.readFile("./hello.txt", "utf-8", (err, data) => {
-  if (err) {
-    console.log("ERROR is =>", err);
-  } else {
-    console.log("FIle Data", data);
-  }
-});
-console.log("second");
+// blocking code (synchronous)
+// const fileContent = fs.readFileSync("./hello.txt", "utf8");
+// console.log("fileContent :", fileContent);
 
-console.log(Buffer.from("h").toJSON());
+// console.log("second");
+
+// non blocking code (asyncrhnous)
+// const read = fs.readFile("./hello.txt", "utf8", (err, data) => {
+//   if (err) {
+//     console.log("error in ", err);
+//   } else {
+//     console.log(data);
+//   }
+// });
+
+// console.log("second");
+
+//write to file
+
+// fs.writeFile(
+//   "./users.json",
+//   JSON.stringify([{ id: 1, name: "mohamed" }]),
+//   (err) => {
+//     if (err) {
+//       console.log("error when creating file", err);
+//     }
+//   }
+// );
+
+//delete file
+
+// fs.unlink("./users.json", (err) => {
+//   if (err) {
+//     console.log("error when deleting file", err);
+//   } else {
+//     console.log("file deleted");
+//   }
+// });
+
+// streams [Readable,writable]
+
+// const rStrweam = fs.createReadStream("./hello.txt", "utf-8");
+// const wstream = fs.createWriteStream("./stream.txt", "utf-8");
+// rStrweam.on("data", (chunk) => {
+//   console.log("chunk====", chunk);
+//   wstream.write("\n ===chunk=== \n");
+//   wstream.write(chunk);
+// });
+// 52:52 min
