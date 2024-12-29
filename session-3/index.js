@@ -33,6 +33,7 @@ const start = performance.now();
 // console.log("End of PBKDF2 ms", performance.now() - start);
 
 // non blocking code
+// cpu tasks
 
 process.env.UV_THREADPOOL_SIZE = 6;
 
@@ -55,12 +56,33 @@ process.env.UV_THREADPOOL_SIZE = 6;
 //   console.log("End of PBKDF2 ms", performance.now() - start);
 // });
 
-fetch("https://dummyjson.com/products").then(() => {
-  console.log("End of request ->", performance.now() - start);
+// network tasks in node js
+
+// fetch("https://dummyjson.com/products").then(() => {
+//   console.log("End of request ->", performance.now() - start);
+// });
+// fetch("https://dummyjson.com/products").then(() => {
+//   console.log("End of request ->", performance.now() - start);
+// });
+// fetch("https://dummyjson.com/products").then(() => {
+//   console.log("End of request ->", performance.now() - start);
+// });
+
+/********************************************************** http server **************************************/
+
+const http = require("node:http");
+
+const server = http.createServer((req, res) => {
+  console.log("request", req.url);
+  if (req.url === "/") {
+    res.end("Home page");
+  } else if (req.url === "/about") {
+    res.end("about page");
+  } else {
+    res.end("Page not found");
+  }
 });
-fetch("https://dummyjson.com/products").then(() => {
-  console.log("End of request ->", performance.now() - start);
-});
-fetch("https://dummyjson.com/products").then(() => {
-  console.log("End of request ->", performance.now() - start);
+
+server.listen(3001, () => {
+  console.log("listenning on port 3001");
 });
