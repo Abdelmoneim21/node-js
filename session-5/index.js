@@ -1,5 +1,5 @@
 const express = require("express");
-
+const { body, validationResult } = require("express-validator");
 const app = express();
 
 // use body parser for express to handle json post
@@ -13,7 +13,7 @@ const courses = [
   },
   {
     id: 2,
-    title: "rect course",
+    title: "react course",
     price: 800,
   },
   {
@@ -40,20 +40,41 @@ app.get("/api/courses/:id", (req, res) => {
 
 /***************add new course (post) */
 
-app.post("/api/courses", (req, res) => {
-  console.log(req.body);
+app.post(
+  "/api/courses",
+  [
+    body("title")
+      .notEmpty()
+      .withMessage("title is required")
+      .isLength({ min: 2 })
+      .withMessage("title length is at least 2 characters"),
+    body("price")
+      .notEmpty()
+      .withMessage("price is required")
+      .isNumeric()
+      .withMessage("price must be a number")
+      .isFloat({ min: 0 })
+      .withMessage("price must be a non-negative number"),
+  ],
+  (req, res) => {
+    console.log(req.body);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      returnres.status(400).json(errors.array());
+    }
 
-  //test cases
-  if (!req.body.title) {
-    return res.status(400).json({ msg: "title not provided" });
+    //test cases
+    // if (!req.body.title) {
+    //   return res.status(400).json({ msg: "title not provided" });
+    // }
+    // if (!req.body.price) {
+    //   return res.status(400).json({ msg: "price not provided" });
+    // }
+    const course = { id: courses.length + 1, ...req.body };
+    courses.push(course);
+    res.status(201).json(course);
   }
-  if (!req.body.price) {
-    return res.status(400).json({ msg: "price not provided" });
-  }
-
-  courses.push({ id: courses.length + 1, ...req.body });
-  res.status(201).json(courses);
-});
+);
 
 app.listen("5000", () => {
   console.log("listening on port 5000");
