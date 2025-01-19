@@ -5,7 +5,7 @@ const app = express();
 // use body parser for express to handle json post
 
 app.use(express.json());
-const courses = [
+let courses = [
   {
     id: 1,
     title: "js course",
@@ -75,6 +75,28 @@ app.post(
     res.status(201).json(course);
   }
 );
+
+//update course
+
+app.patch("/api/courses/:id", (req, res) => {
+  const id = +req.params.id;
+  let course = courses.find((course) => course.id === id);
+  if (!course) {
+    return res.status(404).json({ msg: "course not found" });
+  }
+
+  course = { ...course, ...req.body };
+
+  res.status(200).json(course);
+});
+
+// delete course
+app.delete("/api/courses/:id", (req, res) => {
+  const id = +req.params.id;
+  courses = courses.filter((course) => course.id != id);
+
+  res.status(200).json({ success: true });
+});
 
 app.listen("5000", () => {
   console.log("listening on port 5000");
