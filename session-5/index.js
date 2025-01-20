@@ -93,6 +93,7 @@ app.patch("/api/courses/:id", (req, res) => {
 // delete course
 app.delete("/api/courses/:id", (req, res) => {
   const id = +req.params.id;
+  //filterinf course to delete a targeted course
   courses = courses.filter((course) => course.id != id);
 
   res.status(200).json({ success: true });
